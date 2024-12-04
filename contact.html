@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
+    <script>
+      // Initialize EmailJS with your Public Key
+      (function () {
+        emailjs.init("QeTJp6ROEC0u4fuws"); // Replace "your_public_key" with your actual Public Key from EmailJS
+      })();
+    </script>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section id="contact" class="contact">
+      <h2>Contact Me</h2>
+      <p>Have a question or want to work together? Send me a message below!</p>
+
+      <form id="contact-form">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <input type="text" name="subject" placeholder="Subject" />
+        <textarea
+          name="message"
+          placeholder="Your Message"
+          rows="5"
+          required
+        ></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+      <p id="form-status"></p>
+    </section>
+
+    <script>
+      // Handle form submission
+      document
+        .getElementById("contact-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent the default form submission
+
+          // Extract form data
+          const formData = new FormData(event.target);
+          const formObject = {};
+          formData.forEach((value, key) => {
+            formObject[key] = value;
+          });
+
+          // Send email using EmailJS
+          emailjs
+            .send("service_robrubf", "template_2gv5r0p", formObject)
+            .then(function () {
+              document.getElementById("form-status").innerText =
+                "Message sent successfully!";
+              event.target.reset(); // Reset the form after successful submission
+            })
+            .catch(function (error) {
+              document.getElementById("form-status").innerText =
+                "Failed to send message. Please try again.";
+              console.error("Error:", error);
+            });
+        });
+    </script>
+  </body>
+</html>
